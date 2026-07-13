@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Play, ChevronRight, ChevronLeft, Sparkles, Smartphone, Wifi, Shield, Star, Crown, Tv, Check } from "lucide-react";
+import { Play, ChevronRight, ChevronLeft, Sparkles, Smartphone, Wifi, Shield, Star, Crown, Tv, Check, Download } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MovieCard, type Movie } from "@/components/MovieCard";
@@ -74,7 +74,7 @@ function Index() {
       <Navbar />
 
       {/* HERO CAROUSEL */}
-      <HeroCarousel slides={slides} />
+      <HeroCarousel slides={slides} categories={categories} />
 
 
       {/* CATEGORIES */}
@@ -162,10 +162,11 @@ function TopTenRow({ movies }: { movies?: Movie[] }) {
 }
 
 
-function HeroCarousel({ slides }: { slides: Movie[] }) {
+function HeroCarousel({ slides, categories }: { slides: Movie[]; categories?: any[] }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const count = slides.length;
+  const heroCategories = (categories ?? []).slice(0, 10);
 
   useEffect(() => {
     if (count <= 1 || paused) return;
@@ -177,18 +178,23 @@ function HeroCarousel({ slides }: { slides: Movie[] }) {
 
   if (count === 0) {
     return (
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-slate-950">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="" className="w-full h-full object-cover opacity-40" />
-          <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
+          <img src={heroImage} alt="" className="w-full h-full object-cover object-center block" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/20 to-slate-950/75" />
         </div>
-        <div className="relative container-95 py-24 sm:py-32 lg:py-40">
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight max-w-2xl">
-            Uganda's home for <span className="text-gold">VJ-translated</span> cinema.
-          </h1>
-          <Link to="/movies" className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-gold text-black font-semibold shadow-gold">
-            <Play className="w-4 h-4 fill-black" /> Browse movies
-          </Link>
+        <div className="relative container-95 py-24 sm:py-28 lg:py-32">
+          <div className="max-w-3xl rounded-[2rem] border border-white/10 bg-slate-950/50 p-8 shadow-2xl shadow-black/30 backdrop-blur-xl">
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white">
+              Uganda's home for <span className="text-gold">VJ-translated</span> cinema.
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl">
+              Discover the latest movies in Luganda with premium streaming quality and local VJ flavor.
+            </p>
+            <Link to="/movies" className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-gold px-6 py-3 text-black font-semibold shadow-gold transition hover:brightness-110">
+              <Play className="w-4 h-4 fill-black" /> Browse movies
+            </Link>
+          </div>
         </div>
       </section>
     );
@@ -196,12 +202,12 @@ function HeroCarousel({ slides }: { slides: Movie[] }) {
 
   return (
     <section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden bg-slate-950"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
     >
-      <div className="relative h-[70vh] min-h-[520px] max-h-[780px] w-full">
+      <div className="relative h-[70vh] min-h-[540px] max-h-[780px] w-full">
         {slides.map((m, i) => (
           <div
             key={m.id}
@@ -211,50 +217,64 @@ function HeroCarousel({ slides }: { slides: Movie[] }) {
             <img
               src={m.poster_url || heroImage}
               alt={m.title}
-              className="w-full h-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-center"
               loading={i === 0 ? "eager" : "lazy"}
             />
-            <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/10 to-slate-950/95" />
 
-            <div className="relative h-full container-95 flex items-center">
-              <div className={`max-w-2xl ${i === index ? "animate-fade-in" : ""}`}>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/40 bg-gold/10 text-gold text-xs font-medium mb-5">
-                  <Sparkles className="w-3 h-3" /> Featured Now
+            <div className="relative z-10 h-full container-95 flex items-center">
+              <div className="grid w-full grid-cols-1 gap-6 lg:grid-cols-[minmax(520px,700px)_auto]">
+                <div className="order-2 lg:order-1">
+                  <div className="rounded-[2rem] border border-white/10 bg-slate-950/80 p-8 shadow-2xl shadow-black/40 backdrop-blur-2xl max-w-3xl lg:max-w-2xl">
+                    <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-slate-300 mb-5">
+                      <span className="rounded-full bg-slate-800/80 px-3 py-1 text-slate-100">{m.release_year ?? "2025"}</span>
+                      <span className="rounded-full bg-slate-800/80 px-3 py-1 text-slate-100">Movie</span>
+                      {m.vj ? (
+                        <span className="rounded-full bg-rose-500/10 border border-rose-500/20 px-3 py-1 text-rose-300 tracking-[0.16em]">vj {m.vj}</span>
+                      ) : null}
+                    </div>
+                    <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-white mb-4">
+                      {m.title}
+                    </h1>
+                    <p className="text-sm sm:text-base leading-7 sm:leading-8 text-slate-300 max-w-2xl mb-8">
+                      {m.description ?? "After the underlying tech for M3GAN is stolen and misused by a powerful defense contractor to create a military-grade weapon known as Amelia, your favourite VJ brings the action to life."}
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      <Link to="/movies/$slug" params={{ slug: m.slug }} className="inline-flex items-center gap-2 rounded-full bg-pink-400 px-6 py-3 text-slate-950 font-semibold shadow-lg shadow-pink-500/20 hover:brightness-105 transition">
+                        <Download className="w-4 h-4" /> Download Now
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="mt-6">
+                    <div className="flex flex-wrap gap-2 overflow-x-auto pb-2 lg:pb-0">
+                      {heroCategories.map((category) => (
+                        <span key={category.id} className="rounded-full border border-white/10 bg-slate-800/70 px-3 py-2 text-sm text-slate-100">
+                          {category.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-white">
-                  {m.title}
-                </h1>
-                <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                  {m.rating != null && (
-                    <span className="inline-flex items-center gap-1 text-gold">
-                      <Star className="w-4 h-4 fill-gold" /> {m.rating.toFixed(1)}
-                    </span>
-                  )}
-                  {m.release_year && <span>{m.release_year}</span>}
-                  {m.genre && <span className="px-2 py-0.5 rounded border border-border">{m.genre}</span>}
-                  {m.vj && <span>VJ {m.vj}</span>}
-                  {m.is_premium && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-gold text-black text-[10px] font-bold">
-                      <Crown className="w-3 h-3" /> PREMIUM
-                    </span>
-                  )}
-                </div>
-                <p className="mt-5 text-base sm:text-lg text-muted-foreground line-clamp-3 max-w-xl">
-                  {m.description ?? "Stream the latest blockbusters with your favorite VJs in HD."}
-                </p>
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Link to="/movies/$slug" params={{ slug: m.slug }} className="inline-flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-gold text-black font-semibold hover:opacity-90 shadow-gold">
-                    <Play className="w-4 h-4 fill-black" /> Watch Now
-                  </Link>
-                  <Link to="/pricing" className="inline-flex items-center gap-2 px-6 py-3 rounded-md border border-border hover:border-gold hover:text-gold transition">
-                    See Plans <ChevronRight className="w-4 h-4" />
-                  </Link>
-                </div>
-                <div className="mt-8 hidden sm:flex flex-wrap gap-6 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2"><Wifi className="w-4 h-4 text-gold" /> HD Streaming</div>
-                  <div className="flex items-center gap-2"><Smartphone className="w-4 h-4 text-gold" /> Mobile Money</div>
-                  <div className="flex items-center gap-2"><Shield className="w-4 h-4 text-gold" /> Secure & Private</div>
+
+                <div className="relative order-1 lg:order-2 flex items-start justify-end p-6 lg:p-0">
+                  <div className="flex flex-col gap-4 rounded-full border border-white/10 bg-black/30 p-4 backdrop-blur-xl shadow-2xl shadow-black/40">
+                    <button
+                      onClick={() => go(-1)}
+                      className="h-12 w-12 rounded-full border border-white/15 bg-slate-900/85 text-white shadow-sm transition hover:bg-white/10"
+                      aria-label="Previous slide"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => go(1)}
+                      className="h-12 w-12 rounded-full border border-white/15 bg-slate-900/85 text-white shadow-sm transition hover:bg-white/10"
+                      aria-label="Next slide"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -60,7 +60,8 @@
   --gold-soft: oklch(0.88 0.12 90);
 
   --gradient-gold: linear-gradient(135deg, oklch(0.88 0.14 90), oklch(0.72 0.18 70));
-  --gradient-hero: linear-gradient(180deg, oklch(0.08 0 0 / 0.3) 0%, oklch(0.08 0 0 / 0.85) 70%, oklch(0.08 0 0) 100%);
+  /* Lighter hero gradient so background image remains visible */
+  --gradient-hero: linear-gradient(180deg, oklch(0.08 0 0 / 0.12) 0%, oklch(0.08 0 0 / 0.35) 70%, oklch(0.08 0 0 / 0) 100%);
   --shadow-gold: 0 10px 40px -10px oklch(0.82 0.16 85 / 0.35);
   --shadow-card: 0 8px 24px -8px oklch(0 0 0 / 0.6);
 }
