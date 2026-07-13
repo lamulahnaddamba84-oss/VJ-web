@@ -1,0 +1,1 @@
+ALTER TABLE public.movies ADD COLUMN IF NOT EXISTS company text, ADD COLUMN IF NOT EXISTS telegram_url text, ADD COLUMN IF NOT EXISTS downloads_count integer NOT NULL DEFAULT 0;
