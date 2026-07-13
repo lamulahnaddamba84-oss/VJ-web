@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrendingRouteImport } from './routes/trending'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ShortsRouteImport } from './routes/shorts'
 import { Route as SeriesRouteImport } from './routes/series'
@@ -17,9 +18,11 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as MyListRouteImport } from './routes/my-list'
 import { Route as LiveRouteImport } from './routes/live'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminLoginRouteImport } from './routes/admin-login'
+import { Route as FAQsRouteImport } from './routes/FAQs'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MoviesIndexRouteImport } from './routes/movies.index'
@@ -32,6 +35,11 @@ import { Route as ApiPublicSeedAdminRouteImport } from './routes/api/public/seed
 const TrendingRoute = TrendingRouteImport.update({
   id: '/trending',
   path: '/trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -69,6 +77,11 @@ const LiveRoute = LiveRouteImport.update({
   path: '/live',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoriesRoute = CategoriesRouteImport.update({
   id: '/categories',
   path: '/categories',
@@ -82,6 +95,11 @@ const AuthRoute = AuthRouteImport.update({
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin-login',
   path: '/admin-login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FAQsRoute = FAQsRouteImport.update({
+  id: '/FAQs',
+  path: '/FAQs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -126,9 +144,11 @@ const ApiPublicSeedAdminRoute = ApiPublicSeedAdminRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/FAQs': typeof FAQsRoute
   '/admin-login': typeof AdminLoginRoute
   '/auth': typeof AuthRoute
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/live': typeof LiveRoute
   '/my-list': typeof MyListRoute
   '/pricing': typeof PricingRoute
@@ -136,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/series': typeof SeriesRoute
   '/shorts': typeof ShortsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -146,9 +167,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/FAQs': typeof FAQsRoute
   '/admin-login': typeof AdminLoginRoute
   '/auth': typeof AuthRoute
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/live': typeof LiveRoute
   '/my-list': typeof MyListRoute
   '/pricing': typeof PricingRoute
@@ -156,6 +179,7 @@ export interface FileRoutesByTo {
   '/series': typeof SeriesRoute
   '/shorts': typeof ShortsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -168,9 +192,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/FAQs': typeof FAQsRoute
   '/admin-login': typeof AdminLoginRoute
   '/auth': typeof AuthRoute
   '/categories': typeof CategoriesRoute
+  '/contact': typeof ContactRoute
   '/live': typeof LiveRoute
   '/my-list': typeof MyListRoute
   '/pricing': typeof PricingRoute
@@ -178,6 +204,7 @@ export interface FileRoutesById {
   '/series': typeof SeriesRoute
   '/shorts': typeof ShortsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -190,9 +217,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/FAQs'
     | '/admin-login'
     | '/auth'
     | '/categories'
+    | '/contact'
     | '/live'
     | '/my-list'
     | '/pricing'
@@ -200,6 +229,7 @@ export interface FileRouteTypes {
     | '/series'
     | '/shorts'
     | '/sitemap.xml'
+    | '/terms'
     | '/trending'
     | '/admin'
     | '/dashboard'
@@ -210,9 +240,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/FAQs'
     | '/admin-login'
     | '/auth'
     | '/categories'
+    | '/contact'
     | '/live'
     | '/my-list'
     | '/pricing'
@@ -220,6 +252,7 @@ export interface FileRouteTypes {
     | '/series'
     | '/shorts'
     | '/sitemap.xml'
+    | '/terms'
     | '/trending'
     | '/admin'
     | '/dashboard'
@@ -231,9 +264,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/FAQs'
     | '/admin-login'
     | '/auth'
     | '/categories'
+    | '/contact'
     | '/live'
     | '/my-list'
     | '/pricing'
@@ -241,6 +276,7 @@ export interface FileRouteTypes {
     | '/series'
     | '/shorts'
     | '/sitemap.xml'
+    | '/terms'
     | '/trending'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
@@ -253,9 +289,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  FAQsRoute: typeof FAQsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AuthRoute: typeof AuthRoute
   CategoriesRoute: typeof CategoriesRoute
+  ContactRoute: typeof ContactRoute
   LiveRoute: typeof LiveRoute
   MyListRoute: typeof MyListRoute
   PricingRoute: typeof PricingRoute
@@ -263,6 +301,7 @@ export interface RootRouteChildren {
   SeriesRoute: typeof SeriesRoute
   ShortsRoute: typeof ShortsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
   TrendingRoute: typeof TrendingRoute
   MoviesSlugRoute: typeof MoviesSlugRoute
   WatchSlugRoute: typeof WatchSlugRoute
@@ -277,6 +316,13 @@ declare module '@tanstack/react-router' {
       path: '/trending'
       fullPath: '/trending'
       preLoaderRoute: typeof TrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -328,6 +374,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LiveRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/categories': {
       id: '/categories'
       path: '/categories'
@@ -347,6 +400,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-login'
       fullPath: '/admin-login'
       preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/FAQs': {
+      id: '/FAQs'
+      path: '/FAQs'
+      fullPath: '/FAQs'
+      preLoaderRoute: typeof FAQsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -424,9 +484,11 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  FAQsRoute: FAQsRoute,
   AdminLoginRoute: AdminLoginRoute,
   AuthRoute: AuthRoute,
   CategoriesRoute: CategoriesRoute,
+  ContactRoute: ContactRoute,
   LiveRoute: LiveRoute,
   MyListRoute: MyListRoute,
   PricingRoute: PricingRoute,
@@ -434,6 +496,7 @@ const rootRouteChildren: RootRouteChildren = {
   SeriesRoute: SeriesRoute,
   ShortsRoute: ShortsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
   TrendingRoute: TrendingRoute,
   MoviesSlugRoute: MoviesSlugRoute,
   WatchSlugRoute: WatchSlugRoute,

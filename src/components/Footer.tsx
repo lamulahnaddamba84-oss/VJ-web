@@ -43,18 +43,25 @@ export function Footer() {
           </ul>
         </div>
 
-        <div>
-          <h4 className="font-semibold text-sm mb-3">Support</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><a className="hover:text-gold" href="#">Contact Us</a></li>
-            <Link to="/privacy" className="text-sm text-muted-foreground hover:text-gold transition">
-             Privacy Policy
-            </Link>
-            <li><a className="hover:text-gold" href="#">Terms of Use</a></li>
-            <li><a className="hover:text-gold" href="#">DMCA</a></li>
-            <li><a className="hover:text-gold" href="#">FAQ</a></li>
-          </ul>
-        </div>
+        {/* 4th Column: Support links arranged stacked on separate lines */}
+      <div>
+      <h3 className="font-bold text-white mb-4">Support</h3>
+  
+       <div className="flex flex-col space-y-2">
+        <Link to="/privacy" className="text-sm text-muted-foreground hover:text-gold transition-colors">
+         Privacy Policy
+        </Link>
+        <Link to="/FAQs" className="text-sm text-muted-foreground hover:text-gold transition-colors">
+         FAQs
+        </Link>
+        <Link to="/terms" className="text-sm text-muted-foreground hover:text-gold transition-colors">
+         Terms of Use
+        </Link>
+        <Link to="/contact" className="text-sm text-muted-foreground hover:text-gold transition-colors">
+         Contact Us
+        </Link>
+     </div>
+    </div>
       </div>
       <div className="border-t border-border py-5 flex items-center justify-center text-xs text-muted-foreground">
         <span>© {new Date().getFullYear()} VJ STREAM UG. All rights reserved.</span>

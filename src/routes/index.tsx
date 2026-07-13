@@ -73,31 +73,59 @@ function Index() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
-      {/* HERO CAROUSEL */}
-      <HeroCarousel slides={slides} />
+      <main className="flex-1">
+        <HeroCarousel slides={slides} />
 
+        <section className="container-95 py-10">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <FeatureCard title="1000+ titles" description="Action, romance, comedy, horror and more." />
+            <FeatureCard title="HD streaming" description="Fast playback on mobile, web, or TV." />
+            <FeatureCard title="Mobile Money" description="Pay with MTN, Airtel, or bank transfer." />
+            <FeatureCard title="Premium access" description="Download movies and watch offline." />
+          </div>
+        </section>
 
-      {/* CATEGORIES */}
-      <section className="container-95 py-12">
-        <h2 className="text-2xl font-display font-bold mb-6">Browse by Genre</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-          {categories?.map((c) => (
-            <Link key={c.id} to="/movies" search={{ category: c.slug }} className="px-4 py-6 rounded-lg border border-border hover:border-gold hover:bg-gold/5 text-center transition group">
-              <span className="font-semibold text-sm group-hover:text-gold">{c.name}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+        <section className="container-95 py-10">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-6">
+            <div>
+              <p className="text-sm uppercase tracking-[0.35em] text-gold font-semibold">Browse</p>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold">Top genres & recommended picks</h2>
+            </div>
+            <Link to="/categories" className="text-sm text-gold hover:underline">View all genres →</Link>
+          </div>
+          <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-hide">
+            {categories?.map((c) => (
+              <Link
+                key={c.id}
+                to="/movies"
+                search={{ category: c.slug }}
+                className="min-w-[12rem] rounded-3xl border border-border bg-card px-6 py-5 text-sm font-semibold text-left transition hover:border-gold hover:bg-gold/5"
+              >
+                {c.name}
+              </Link>
+            ))}
+          </div>
+        </section>
 
-      <TopTenRow movies={trending?.slice(0, 10)} />
-      <SectionRow title="Latest Update" movies={latestUpdates} />
-      <SectionRow title="Newly Added" movies={newlyAdded} />
-      <SectionRow title="Explore" movies={explore} />
-      <SeriesTrailersRow series={series} />
-      <PricingPreview />
-
+        <SectionRow title="Trending Now" movies={trending} />
+        <SectionRow title="Newly Added" movies={newlyAdded} />
+        <SectionRow title="Explore" movies={explore} />
+        <TopTenRow movies={trending?.slice(0, 10)} />
+        <SectionRow title="Latest Update" movies={latestUpdates} />
+        <SeriesTrailersRow series={series} />
+        <PricingPreview />
+      </main>
 
       <Footer />
+    </div>
+  );
+}
+
+function FeatureCard({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="rounded-3xl border border-border bg-card p-6 shadow-card transition hover:border-gold hover:bg-gold/5">
+      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-gold mb-3">{title}</p>
+      <p className="text-sm leading-6 text-muted-foreground">{description}</p>
     </div>
   );
 }
@@ -358,3 +386,5 @@ function PricingPreview() {
     </section>
   );
 }
+
+
