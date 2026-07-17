@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { MovieCard, type Movie } from "@/components/MovieCard";
 import { supabase } from "@/integrations/supabase/client";
+import { mergeCategories } from "@/lib/categories";
 import heroImage from "@/assets/hero-cinema.jpg";
 
 export const Route = createFileRoute("/")({
@@ -58,7 +59,7 @@ function Index() {
     queryKey: ["categories"],
     queryFn: async () => {
       const { data } = await supabase.from("categories").select("*");
-      return data ?? [];
+      return mergeCategories(data ?? []);
     },
   });
   const { data: series } = useQuery({

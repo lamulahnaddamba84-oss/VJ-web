@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Film, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
+import { DEFAULT_CATEGORY_DEFINITIONS } from "@/lib/categories";
 
-const CATEGORIES = ["Action", "Comedy", "Horror", "Romance", "Adventure"];
+const CATEGORIES = DEFAULT_CATEGORY_DEFINITIONS.map((category) => category.name);
 
 export function Footer() {
   return (

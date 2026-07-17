@@ -4,6 +4,7 @@ import { Tag, ChevronRight } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import { mergeCategories } from "@/lib/categories";
 
 export const Route = createFileRoute("/categories")({
   head: () => ({
@@ -18,7 +19,7 @@ export const Route = createFileRoute("/categories")({
 function CategoriesPage() {
   const { data: categories } = useQuery({
     queryKey: ["categories"],
-    queryFn: async () => (await supabase.from("categories").select("*").order("name")).data ?? [],
+    queryFn: async () => mergeCategories((await supabase.from("categories").select("*").order("name")).data ?? []),
   });
 
   const { data: counts } = useQuery({
