@@ -20,6 +20,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [showAllGenres, setShowAllGenres] = useState(false);
+
   const { data: featured } = useQuery({
     queryKey: ["movies", "featured"],
     queryFn: async () => {
@@ -69,6 +71,8 @@ function Index() {
 
   // Featured = latest additions (per user brief: hero = new movies collection)
   const slides = (newlyAdded && newlyAdded.length > 0 ? newlyAdded : featured && featured.length > 0 ? featured : trending)?.slice(0, 5) ?? [];
+  const visibleCategories = categories?.slice(0, 6) ?? [];
+  const hiddenCategories = categories?.slice(6) ?? [];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -80,9 +84,20 @@ function Index() {
 
       {/* CATEGORIES */}
       <section className="container-95 py-12">
-        <h2 className="text-2xl font-display font-bold mb-6">Browse by Genre</h2>
+        <div className="flex items-center justify-between gap-3 mb-6">
+          <h2 className="text-2xl font-display font-bold">Browse by Genre</h2>
+          {hiddenCategories.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowAllGenres((prev) => !prev)}
+              className="text-sm text-gold hover:underline"
+            >
+              {showAllGenres ? "View less" : "View all"}
+            </button>
+          )}
+        </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-          {categories?.map((c) => (
+          {(showAllGenres ? categories : visibleCategories)?.map((c) => (
             <Link key={c.id} to="/movies" search={{ category: c.slug }} className="px-4 py-6 rounded-lg border border-border hover:border-gold hover:bg-gold/5 text-center transition group">
               <span className="font-semibold text-sm group-hover:text-gold">{c.name}</span>
             </Link>

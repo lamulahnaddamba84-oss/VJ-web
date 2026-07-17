@@ -14,6 +14,12 @@ export const DEFAULT_CATEGORY_DEFINITIONS = [
   { id: "default-documentary", name: "Documentary", slug: "documentary" },
   { id: "default-history", name: "History", slug: "history" },
   { id: "default-crime", name: "Crime", slug: "crime" },
+  { id: "default-drama", name: "Drama", slug: "drama" },
+  { id: "default-horror", name: "Horror", slug: "horror" },
+  { id: "default-romance", name: "Romance", slug: "romance" },
+  { id: "default-thriller", name: "Thriller", slug: "thriller" },
+  { id: "default-animation", name: "Animation", slug: "animation" },
+  { id: "default-action", name: "Action", slug: "action" },
 ] as const;
 
 export function mergeCategories(categories?: CategoryLike[] | null) {
